@@ -6,39 +6,41 @@
 #  Uses the Az Module and not the AzureRM module
 #####################################
 
-#  Variables - Required
-#  Please fill in the following 4 variables.
-$TenantID=""
-$SubscriptionID=""
-$aztag = ""
-$tagvalue = ""
+Param (
+    [Parameter(Mandatory = $true)]
+    [string]$TenantID, 
+    [Parameter(Mandatory = $true)]
+    [string]$SubscriptionID,    
+    [string]$AzTag = "UpdateWindow",
+    [string]$TagValue = "Default"
+)
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
 
 #  Discovery of all Azure VM's in the current subscription.
 $azurevms = Get-AzVM | Select-Object -ExpandProperty Name
-Write-Host "Discovering Azure VM's in the following subscription $SubscriptionID  Please hold...."
+Write-Output "Discovering Azure VM's in the following subscription $SubscriptionID  Please hold...."
 
-Write-Host "The following VM's have been discovered in subscription $SubscriptionID"
-$azurevms
+Write-Output "The following VM's have been discovered in subscription $SubscriptionID"
+Write-Output $azurevms
 
 
 foreach ($azurevm in $azurevms) {
     
-    Write-Host Checking for tag "$aztag" on "$azurevm"
+    Write-Output Checking for tag "$AzTag" on "$azurevm"
     $ResourceGroupName = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
     
     $tags = (Get-AzResource -ResourceGroupName $ResourceGroupName `
                         -Name $azurevm).Tags
 
 If ($tags.UpdateWindow){
-Write-Host "$azurevm already has the tag $aztag."
+Write-Output "$azurevm already has the tag $AzTag."
 }
 else
 {
-Write-Host "Creating Tag $aztag and Value $tagvalue for $azurevm"
-$tags.Add($aztag,$tagvalue)
+Write-Output "Creating Tag $AzTag and Value $TagValue for $azurevm"
+$tags.Add($AzTag,$TagValue)
   
     Set-AzResource -ResourceGroupName $ResourceGroupName `
                -ResourceName $azurevm `
@@ -49,4 +51,4 @@ $tags.Add($aztag,$tagvalue)
    
 }
 
-Write-Host "All tagging is done (and hopfully it worked).  Please exit the ride to your left.  Have a nice day!"
+Write-Output "All tagging is done (and hopfully it worked).  Please exit the ride to your left.  Have a nice day!"
