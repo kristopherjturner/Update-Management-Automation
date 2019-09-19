@@ -11,12 +11,21 @@
 
 #  Variables - Required
 #  Please fill in the following 6 variables.
-$AutomationAccount=""
+<#$AutomationAccount=""
 $ResourceGroupName=""
 $TenantID=""
 $SubscriptionID=""
 $aztag = ""
-$tagvalue = ""
+$tagvalue = "" #>
+
+#  Sandbox
+# Variables - Required
+$AutomationAccount="cloudlabaa"
+$ResourceGroupName="cloudlabworkspaceRG"
+$TenantID="f838dbf6-e9d4-4d84-a2e3-a4bba4064586"
+$SubscriptionID="2c58324e-3624-4ef5-bd68-7a8043129590"
+$aztag = "UpdateWindow"
+$tagvalue = "Default"
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
@@ -31,9 +40,9 @@ $azurevms
 foreach ($azurevm in $azurevms) {
     
     Write-Host Checking for tag "$aztag" on "$azurevm"
-    $ResourceGroupName = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
+    $TAGResourceGroupName = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
     
-    $tags = (Get-AzResource -ResourceGroupName $ResourceGroupName `
+    $tags = (Get-AzResource -ResourceGroupName $TAGResourceGroupName `
                         -Name $azurevm).Tags
 
 If ($tags.UpdateWindow){
@@ -44,7 +53,7 @@ else
 Write-Host "Creating Tag $aztag and Value $tagvalue for $azurevm"
 $tags.Add($aztag,$tagvalue)
   
-    Set-AzResource -ResourceGroupName $ResourceGroupName `
+    Set-AzResource -ResourceGroupName $TAGResourceGroupName `
                -ResourceName $azurevm `
                -ResourceType Microsoft.Compute/virtualMachines `
                -Tag $tags `
@@ -82,7 +91,11 @@ Write-Host "All settigns have been deployed. (and hopfully it worked).  Please t
 #  Build the array
 #  This will use the array.csv file.
 
+Write-Host "Building array, this may take some time......"
+
 $ScheduleConfig = Get-Content -Path .\array.csv | ConvertFrom-Csv
+
+Write-Host "Array is built. We on moving forward with the deployment.  Please standby."
 
 #  Schedule Deployments Start Here
 
@@ -117,15 +130,6 @@ $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
                                                   -DayofWeekOccurrence $WindowsSchedule.DaysofWeekOccurrence `
                                                   -MonthInterval 1 `
                                                   -ForUpdateConfiguration
-
-New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
-                                                 -AutomationAccountName $AutomationAccount `
-                                                 -Schedule $schedule `
-                                                 -Windows `
-                                                 -Azurequery $AzureQueries `
-                                                 -IncludedUpdateClassification Critical,Security,Updates,UpdateRollup,Definition `
-                                                 -Duration $duration `
-                                                 -RebootSetting $WindowsSchedule.Reboot
 }
 
 foreach ($LinuxSchedule in $LinuxSchedules){
