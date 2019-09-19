@@ -1,32 +1,88 @@
-# Variables - Required
+###################################
+#  This script will add a new tag and value all Azure VM's running within Subscription.  It will configure VM's
+#  for updates to be installed only during maintenance windows, and allow pre-download of updates.  It will also
+#  create the deployment schedules.
+#  Current Version:  .01000001 01111010 01110101 01110010 01100101
+#  Date Written:  8-29-2019
+#  Date Updated:  9-18-2019
+#  Created By:    Kristopher J. Turner (The Country Cloud Boy)
+#  Uses the Az Module and not the AzureRM module
+#####################################
+
+#  Variables - Required
+#  Please fill in the following 6 variables.
 $AutomationAccount=""
 $ResourceGroupName=""
 $TenantID=""
 $SubscriptionID=""
+$aztag = ""
+$tagvalue = ""
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
-# Build the array
-$ScheduleConfig = @(
-[pscustomobject]@{ScheduleName='1st Saturday UTC0 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT1UTC0-NR';StartTime='00:00';DaysofWeekOccurrence='First'}
-[pscustomobject]@{ScheduleName='1st Saturday UTC0 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT1UTC0-NR';StartTime='00:00';DaysofWeekOccurrence='First'}
-[pscustomobject]@{ScheduleName='2nd Saturday UTC0 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT2UTC0-NR';StartTime='00:00';DaysofWeekOccurrence='Second'}
-[pscustomobject]@{ScheduleName='2nd Saturday UTC0 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT2UTC0-NR';StartTime='00:00';DaysofWeekOccurrence='Second'}
-[pscustomobject]@{ScheduleName='3rd Saturday UTC0 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT3UTC0-NR';StartTime='00:00';DaysofWeekOccurrence='Third'}
-[pscustomobject]@{ScheduleName='3rd Saturday UTC0 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT3UTC0-NR';StartTime='00:00';DaysofWeekOccurrence='Third'}
-[pscustomobject]@{ScheduleName='1st Saturday UTC8 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT1UTC8-NR';StartTime='08:00';DaysofWeekOccurrence='First'}
-[pscustomobject]@{ScheduleName='1st Saturday UTC8 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT1UTC8-NR';StartTime='08:00';DaysofWeekOccurrence='First'}
-[pscustomobject]@{ScheduleName='2nd Saturday UTC8 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT2UTC8-NR';StartTime='08:00';DaysofWeekOccurrence='Second'}
-[pscustomobject]@{ScheduleName='2nd Saturday UTC8 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT2UTC8-NR';StartTime='08:00';DaysofWeekOccurrence='Second'}
-[pscustomobject]@{ScheduleName='3rd Saturday UTC8 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT3UTC8-NR';StartTime='08:00';DaysofWeekOccurrence='Third'}
-[pscustomobject]@{ScheduleName='3rd Saturday UTC8 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT3UTC8-NR';StartTime='08:00';DaysofWeekOccurrence='Third'}
-[pscustomobject]@{ScheduleName='1st Saturday UTC16 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT1UTC16-NR';StartTime='16:00';DaysofWeekOccurrence='First'}
-[pscustomobject]@{ScheduleName='1st Saturday UTC16 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT1UTC16-NR';StartTime='16:00';DaysofWeekOccurrence='First'}
-[pscustomobject]@{ScheduleName='2nd Saturday UTC16 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT2UTC16-NR';StartTime='16:00';DaysofWeekOccurrence='Second'}
-[pscustomobject]@{ScheduleName='2nd Saturday UTC16 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT2UTC16-NR';StartTime='16:00';DaysofWeekOccurrence='Second'}
-[pscustomobject]@{ScheduleName='3rd Saturday UTC16 - Windows Update - No Reboot';Reboot='Never';OS='Windows';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT3UTC16-NR';StartTime='16:00';DaysofWeekOccurrence='Third'}
-[pscustomobject]@{ScheduleName='3rd Saturday UTC16 - Linux Update - No Reboot';Reboot='Never';OS='Linux';DayofWeek='Saturday';TagName='UpdateWindow';TagValue='SAT3UTC16-NR';StartTime='16:00';DaysofWeekOccurrence='Third'}
-)
+#  Part I - Create Tag and Tag Values
+#  Discovery of all Azure VM's in the current subscription.
+$azurevms = Get-AzVM | Select-Object -ExpandProperty Name
+Write-Host "Discovering Azure VM's in the following subscription $SubscriptionID  Please hold...."
+
+Write-Host "The following VM's have been discovered in subscription $SubscriptionID"
+$azurevms
+
+foreach ($azurevm in $azurevms) {
+    
+    Write-Host Checking for tag "$aztag" on "$azurevm"
+    $ResourceGroupName = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
+    
+    $tags = (Get-AzResource -ResourceGroupName $ResourceGroupName `
+                        -Name $azurevm).Tags
+
+If ($tags.UpdateWindow){
+Write-Host "$azurevm already has the tag $aztag."
+}
+else
+{
+Write-Host "Creating Tag $aztag and Value $tagvalue for $azurevm"
+$tags.Add($aztag,$tagvalue)
+  
+    Set-AzResource -ResourceGroupName $ResourceGroupName `
+               -ResourceName $azurevm `
+               -ResourceType Microsoft.Compute/virtualMachines `
+               -Tag $tags `
+               -Force `
+   }
+   
+}
+Write-Host "All tagging is done (and hopfully it worked).  Please exit the ride to your left.  Have a nice day!"
+
+#  Part II -  VM's Configuration
+#  Discovery of all Azure VM's in the current subscription.
+$azurevms = Get-AzVM | where-object { $_.StorageProfile.OSDisk.OSType -eq "Windows" } | Sort-Object Name | ForEach-Object {$_.Name} | Out-String -Stream | Select-Object
+Write-Host "Discovering Azure VM's.  Please hold...."
+
+foreach ($azurevm in $azurevms) {
+    
+#  This will configure VM's to pre-download updates.
+$WUSettings = (New-Object -com "Microsoft.Update.AutoUpdate").Settings
+$WUSettings.NotificationLevel = 3
+$WUSettings.Save()
+
+#  This will disable the automation installation of updates on VM's.
+$AutoUpdatePath = "HKLM:SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
+Set-ItemProperty -Path $AutoUpdatePath -Name NoAutoUpdate -Value 1
+
+#  This will enable updates for other Microsoft products.
+$ServiceManager = (New-Object -com "Microsoft.Update.ServiceManager")
+$ServiceManager.Services
+$ServiceID = "7971f918-a847-4430-9279-4a52d1efe18d"
+$ServiceManager.AddService2($ServiceId,7,"")
+}
+Write-Host "All settigns have been deployed. (and hopfully it worked).  Please tip your waitress.  Have a nice day!"
+
+#  Part III - Create Deployment Schedules
+#  Build the array
+#  This will use the array.csv file.
+
+$ScheduleConfig = Get-Content -Path .\array.csv | ConvertFrom-Csv
 
 #  Schedule Deployments Start Here
 
@@ -52,9 +108,6 @@ $datetime= $date + "t" + $time
 
 $startTime = [DateTimeOffset]"$datetime"
 $duration = New-TimeSpan -Hours 2
-
-
-
 
 $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
                                                   -AutomationAccountName $AutomationAccount `
@@ -109,5 +162,4 @@ New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupNam
                                                  -Duration $duration `
                                                  -RebootSetting $LinuxSchedule.Reboot
 }
-
 Write-host "That is all folks!"
