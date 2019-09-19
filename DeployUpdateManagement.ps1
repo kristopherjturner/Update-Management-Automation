@@ -11,21 +11,12 @@
 
 #  Variables - Required
 #  Please fill in the following 6 variables.
-<#$AutomationAccount=""
+$AutomationAccount=""
 $ResourceGroupName=""
 $TenantID=""
 $SubscriptionID=""
 $aztag = ""
-$tagvalue = "" #>
-
-#  Sandbox
-# Variables - Required
-$AutomationAccount="cloudlabaa"
-$ResourceGroupName="cloudlabworkspaceRG"
-$TenantID="f838dbf6-e9d4-4d84-a2e3-a4bba4064586"
-$SubscriptionID="2c58324e-3624-4ef5-bd68-7a8043129590"
-$aztag = "UpdateWindow"
-$tagvalue = "Default"
+$tagvalue = "" 
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
