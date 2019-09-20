@@ -121,6 +121,15 @@ $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
                                                   -DayofWeekOccurrence $WindowsSchedule.DaysofWeekOccurrence `
                                                   -MonthInterval 1 `
                                                   -ForUpdateConfiguration
+
+New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
+                                                 -AutomationAccountName $AutomationAccount `
+                                                 -Schedule $schedule `
+                                                 -Windows `
+                                                 -Azurequery $AzureQueries `
+                                                 -IncludedUpdateClassification Critical,Security,Updates,UpdateRollup,Definition `
+                                                 -Duration $duration `
+                                                 -RebootSetting $WindowsSchedule.Reboot
 }
 
 foreach ($LinuxSchedule in $LinuxSchedules){
