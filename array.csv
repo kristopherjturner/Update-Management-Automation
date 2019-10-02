@@ -1,146 +1,146 @@
-#TYPE System.Management.Automation.PSCustomObject
-"ScheduleName","Reboot","OS","DayofWeek","TagName","TagValue","StartTime","DaysofWeekOccurrence"
-"1st Monday UTC0 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON1UTC0","00:00","First"
-"1st Monday UTC0 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON1UTC0","00:00","First"
-"2nd Monday UTC0 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON2UTC0","00:00","Second"
-"2nd Monday UTC0 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON2UTC0","00:00","Second"
-"3rd Monday UTC0 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON3UTC0","00:00","Third"
-"3rd Monday UTC0 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON3UTC0","00:00","Third"
-"1st Monday UTC8 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON1UTC8","08:00","First"
-"1st Monday UTC8 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON1UTC8","08:00","First"
-"2nd Monday UTC8 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON2UTC8","08:00","Second"
-"2nd Monday UTC8 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON2UTC8","08:00","Second"
-"3rd Monday UTC8 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON3UTC8","08:00","Third"
-"3rd Monday UTC8 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON3UTC8","08:00","Third"
-"1st Monday UTC16 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON1UTC16","16:00","First"
-"1st Monday UTC16 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON1UTC16","16:00","First"
-"2nd Monday UTC16 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON2UTC16","16:00","Second"
-"2nd Monday UTC16 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON2UTC16","16:00","Second"
-"3rd Monday UTC16 - Windows Update","IfRequired","Windows","Monday","UpdateWindow","MON3UTC16","16:00","Third"
-"3rd Monday UTC16 - Linux Update","IfRequired","Linux","Monday","UpdateWindow","MON3UTC16","16:00","Third"
-"1st Tuesday UTC0 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE1UTC0","00:00","First"
-"1st Tuesday UTC0 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE1UTC0","00:00","First"
-"2nd Tuesday UTC0 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE2UTC0","00:00","Second"
-"2nd Tuesday UTC0 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE2UTC0","00:00","Second"
-"3rd Tuesday UTC0 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE3UTC0","00:00","Third"
-"3rd Tuesday UTC0 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE3UTC0","00:00","Third"
-"1st Tuesday UTC8 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE1UTC8","08:00","First"
-"1st Tuesday UTC8 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE1UTC8","08:00","First"
-"2nd Tuesday UTC8 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE2UTC8","08:00","Second"
-"2nd Tuesday UTC8 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE2UTC8","08:00","Second"
-"3rd Tuesday UTC8 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE3UTC8","08:00","Third"
-"3rd Tuesday UTC8 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE3UTC8","08:00","Third"
-"1st Tuesday UTC16 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE1UTC16","16:00","First"
-"1st Tuesday UTC16 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE1UTC16","16:00","First"
-"2nd Tuesday UTC16 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE2UTC16","16:00","Second"
-"2nd Tuesday UTC16 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE2UTC16","16:00","Second"
-"3rd Tuesday UTC16 - Windows Update","IfRequired","Windows","Tuesday","UpdateWindow","TUE3UTC16","16:00","Third"
-"3rd Tuesday UTC16 - Linux Update","IfRequired","Linux","Tuesday","UpdateWindow","TUE3UTC16","16:00","Third"
-"1st Wednesday UTC0 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED1UTC0","00:00","First"
-"1st Wednesday UTC0 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED1UTC0","00:00","First"
-"2nd Wednesday UTC0 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED2UTC0","00:00","Second"
-"2nd Wednesday UTC0 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED2UTC0","00:00","Second"
-"3rd Wednesday UTC0 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED3UTC0","00:00","Third"
-"3rd Wednesday UTC0 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED3UTC0","00:00","Third"
-"1st Wednesday UTC8 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED1UTC8","08:00","First"
-"1st Wednesday UTC8 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED1UTC8","08:00","First"
-"2nd Wednesday UTC8 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED2UTC8","08:00","Second"
-"2nd Wednesday UTC8 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED2UTC8","08:00","Second"
-"3rd Wednesday UTC8 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED3UTC8","08:00","Third"
-"3rd Wednesday UTC8 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED3UTC8","08:00","Third"
-"1st Wednesday UTC16 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED1UTC16","16:00","First"
-"1st Wednesday UTC16 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED1UTC16","16:00","First"
-"2nd Wednesday UTC16 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED2UTC16","16:00","Second"
-"2nd Wednesday UTC16 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED2UTC16","16:00","Second"
-"3rd Wednesday UTC16 - Windows Update","IfRequired","Windows","Wednesday","UpdateWindow","WED3UTC16","16:00","Third"
-"3rd Wednesday UTC16 - Linux Update","IfRequired","Linux","Wednesday","UpdateWindow","WED3UTC16","16:00","Third"
-"1st Thursday UTC0 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU1UTC0","00:00","First"
-"1st Thursday UTC0 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU1UTC0","00:00","First"
-"2nd Thursday UTC0 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU2UTC0","00:00","Second"
-"2nd Thursday UTC0 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU2UTC0","00:00","Second"
-"3rd Thursday UTC0 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU3UTC0","00:00","Third"
-"3rd Thursday UTC0 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU3UTC0","00:00","Third"
-"1st Thursday UTC8 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU1UTC8","08:00","First"
-"1st Thursday UTC8 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU1UTC8","08:00","First"
-"2nd Thursday UTC8 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU2UTC8","08:00","Second"
-"2nd Thursday UTC8 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU2UTC8","08:00","Second"
-"3rd Thursday UTC8 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU3UTC8","08:00","Third"
-"3rd Thursday UTC8 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU3UTC8","08:00","Third"
-"1st Thursday UTC16 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU1UTC16","16:00","First"
-"1st Thursday UTC16 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU1UTC16","16:00","First"
-"2nd Thursday UTC16 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU2UTC16","16:00","Second"
-"2nd Thursday UTC16 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU2UTC16","16:00","Second"
-"3rd Thursday UTC16 - Windows Update","IfRequired","Windows","Thursday","UpdateWindow","THU3UTC16","16:00","Third"
-"3rd Thursday UTC16 - Linux Update","IfRequired","Linux","Thursday","UpdateWindow","THU3UTC16","16:00","Third"
-"1st Friday UTC0 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI1UTC0","00:00","First"
-"1st Friday UTC0 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI1UTC0","00:00","First"
-"2nd Friday UTC0 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI2UTC0","00:00","Second"
-"2nd Friday UTC0 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI2UTC0","00:00","Second"
-"3rd Friday UTC0 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI3UTC0","00:00","Third"
-"3rd Friday UTC0 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI3UTC0","00:00","Third"
-"1st Friday UTC8 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI1UTC8","08:00","First"
-"1st Friday UTC8 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI1UTC8","08:00","First"
-"2nd Friday UTC8 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI2UTC8","08:00","Second"
-"2nd Friday UTC8 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI2UTC8","08:00","Second"
-"3rd Friday UTC8 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI3UTC8","08:00","Third"
-"3rd Friday UTC8 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI3UTC8","08:00","Third"
-"1st Friday UTC16 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI1UTC16","16:00","First"
-"1st Friday UTC16 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI1UTC16","16:00","First"
-"2nd Friday UTC16 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI2UTC16","16:00","Second"
-"2nd Friday UTC16 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI2UTC16","16:00","Second"
-"3rd Friday UTC16 - Windows Update","IfRequired","Windows","Friday","UpdateWindow","FRI3UTC16","16:00","Third"
-"3rd Friday UTC16 - Linux Update","IfRequired","Linux","Friday","UpdateWindow","FRI3UTC16","16:00","Third"
-"1st Saturday UTC0 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT1UTC0","00:00","First"
-"1st Saturday UTC0 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT1UTC0","00:00","First"
-"2nd Saturday UTC0 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT2UTC0","00:00","Second"
-"2nd Saturday UTC0 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT2UTC0","00:00","Second"
-"3rd Saturday UTC0 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT3UTC0","00:00","Third"
-"3rd Saturday UTC0 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT3UTC0","00:00","Third"
-"1st Saturday UTC8 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT1UTC8","08:00","First"
-"1st Saturday UTC8 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT1UTC8","08:00","First"
-"2nd Saturday UTC8 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT2UTC8","08:00","Second"
-"2nd Saturday UTC8 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT2UTC8","08:00","Second"
-"3rd Saturday UTC8 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT3UTC8","08:00","Third"
-"3rd Saturday UTC8 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT3UTC8","08:00","Third"
-"1st Saturday UTC16 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT1UTC16","16:00","First"
-"1st Saturday UTC16 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT1UTC16","16:00","First"
-"2nd Saturday UTC16 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT2UTC16","16:00","Second"
-"2nd Saturday UTC16 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT2UTC16","16:00","Second"
-"3rd Saturday UTC16 - Windows Update","IfRequired","Windows","Saturday","UpdateWindow","SAT3UTC16","16:00","Third"
-"3rd Saturday UTC16 - Linux Update","IfRequired","Linux","Saturday","UpdateWindow","SAT3UTC16","16:00","Third"
-"1st Sunday UTC0 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN1UTC0","00:00","First"
-"1st Sunday UTC0 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN1UTC0","00:00","First"
-"2nd Sunday UTC0 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN2UTC0","00:00","Second"
-"2nd Sunday UTC0 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN2UTC0","00:00","Second"
-"3rd Sunday UTC0 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN3UTC0","00:00","Third"
-"3rd Sunday UTC0 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN3UTC0","00:00","Third"
-"1st Sunday UTC8 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN1UTC8","08:00","First"
-"1st Sunday UTC8 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN1UTC8","08:00","First"
-"2nd Sunday UTC8 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN2UTC8","08:00","Second"
-"2nd Sunday UTC8 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN2UTC8","08:00","Second"
-"3rd Sunday UTC8 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN3UTC8","08:00","Third"
-"3rd Sunday UTC8 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN3UTC8","08:00","Third"
-"1st Sunday UTC16 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN1UTC16","16:00","First"
-"1st Sunday UTC16 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN1UTC16","16:00","First"
-"2nd Sunday UTC16 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN2UTC16","16:00","Second"
-"2nd Sunday UTC16 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN2UTC16","16:00","Second"
-"3rd Sunday UTC16 - Windows Update","IfRequired","Windows","Sunday","UpdateWindow","SUN3UTC16","16:00","Third"
-"3rd Sunday UTC16 - Linux Update","IfRequired","Linux","Sunday","UpdateWindow","SUN3UTC16","16:00","Third"
-"1st Saturday UTC0 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT1UTC0-NR","00:00","First"
-"1st Saturday UTC0 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT1UTC0-NR","00:00","First"
-"2nd Saturday UTC0 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT2UTC0-NR","00:00","Second"
-"2nd Saturday UTC0 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT2UTC0-NR","00:00","Second"
-"3rd Saturday UTC0 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT3UTC0-NR","00:00","Third"
-"3rd Saturday UTC0 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT3UTC0-NR","00:00","Third"
-"1st Saturday UTC8 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT1UTC8-NR","08:00","First"
-"1st Saturday UTC8 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT1UTC8-NR","08:00","First"
-"2nd Saturday UTC8 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT2UTC8-NR","08:00","Second"
-"2nd Saturday UTC8 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT2UTC8-NR","08:00","Second"
-"3rd Saturday UTC8 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT3UTC8-NR","08:00","Third"
-"3rd Saturday UTC8 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT3UTC8-NR","08:00","Third"
-"1st Saturday UTC16 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT1UTC16-NR","16:00","First"
-"1st Saturday UTC16 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT1UTC16-NR","16:00","First"
-"2nd Saturday UTC16 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT2UTC16-NR","16:00","Second"
-"2nd Saturday UTC16 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT2UTC16-NR","16:00","Second"
-"3rd Saturday UTC16 - Windows Update - No Reboot","Never","Windows","Saturday","UpdateWindow","SAT3UTC16-NR","16:00","Third"
-"3rd Saturday UTC16 - Linux Update - No Reboot","Never","Linux","Saturday","UpdateWindow","SAT3UTC16-NR","16:00","Third"
+#TYPE System.Management.Automation.PSCustomObject,,,,,,,
+ScheduleName,Reboot,OS,DayofWeek,TagName,TagValue,StartTime,DaysofWeekOccurrence
+1st Monday UTC0 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON1UTC0,0:00,First
+1st Monday UTC0 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON1UTC0,0:00,First
+2nd Monday UTC0 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON2UTC0,0:00,Second
+2nd Monday UTC0 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON2UTC0,0:00,Second
+3rd Monday UTC0 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON3UTC0,0:00,Third
+3rd Monday UTC0 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON3UTC0,0:00,Third
+1st Monday UTC8 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON1UTC8,8:00,First
+1st Monday UTC8 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON1UTC8,8:00,First
+2nd Monday UTC8 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON2UTC8,8:00,Second
+2nd Monday UTC8 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON2UTC8,8:00,Second
+3rd Monday UTC8 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON3UTC8,8:00,Third
+3rd Monday UTC8 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON3UTC8,8:00,Third
+1st Monday UTC16 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON1UTC16,16:00,First
+1st Monday UTC16 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON1UTC16,16:00,First
+2nd Monday UTC16 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON2UTC16,16:00,Second
+2nd Monday UTC16 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON2UTC16,16:00,Second
+3rd Monday UTC16 - Windows Update,IfRequired,Windows,Monday,UpdateWindow,MON3UTC16,16:00,Third
+3rd Monday UTC16 - Linux Update,IfRequired,Linux,Monday,UpdateWindow,MON3UTC16,16:00,Third
+1st Tuesday UTC0 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE1UTC0,0:00,First
+1st Tuesday UTC0 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE1UTC0,0:00,First
+2nd Tuesday UTC0 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE2UTC0,0:00,Second
+2nd Tuesday UTC0 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE2UTC0,0:00,Second
+3rd Tuesday UTC0 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE3UTC0,0:00,Third
+3rd Tuesday UTC0 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE3UTC0,0:00,Third
+1st Tuesday UTC8 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE1UTC8,8:00,First
+1st Tuesday UTC8 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE1UTC8,8:00,First
+2nd Tuesday UTC8 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE2UTC8,8:00,Second
+2nd Tuesday UTC8 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE2UTC8,8:00,Second
+3rd Tuesday UTC8 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE3UTC8,8:00,Third
+3rd Tuesday UTC8 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE3UTC8,8:00,Third
+1st Tuesday UTC16 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE1UTC16,16:00,First
+1st Tuesday UTC16 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE1UTC16,16:00,First
+2nd Tuesday UTC16 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE2UTC16,16:00,Second
+2nd Tuesday UTC16 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE2UTC16,16:00,Second
+3rd Tuesday UTC16 - Windows Update,IfRequired,Windows,Tuesday,UpdateWindow,TUE3UTC16,16:00,Third
+3rd Tuesday UTC16 - Linux Update,IfRequired,Linux,Tuesday,UpdateWindow,TUE3UTC16,16:00,Third
+1st Wednesday UTC0 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED1UTC0,0:00,First
+1st Wednesday UTC0 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED1UTC0,0:00,First
+2nd Wednesday UTC0 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED2UTC0,0:00,Second
+2nd Wednesday UTC0 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED2UTC0,0:00,Second
+3rd Wednesday UTC0 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED3UTC0,0:00,Third
+3rd Wednesday UTC0 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED3UTC0,0:00,Third
+1st Wednesday UTC8 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED1UTC8,8:00,First
+1st Wednesday UTC8 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED1UTC8,8:00,First
+2nd Wednesday UTC8 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED2UTC8,8:00,Second
+2nd Wednesday UTC8 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED2UTC8,8:00,Second
+3rd Wednesday UTC8 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED3UTC8,8:00,Third
+3rd Wednesday UTC8 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED3UTC8,8:00,Third
+1st Wednesday UTC16 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED1UTC16,16:00,First
+1st Wednesday UTC16 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED1UTC16,16:00,First
+2nd Wednesday UTC16 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED2UTC16,16:00,Second
+2nd Wednesday UTC16 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED2UTC16,16:00,Second
+3rd Wednesday UTC16 - Windows Update,IfRequired,Windows,Wednesday,UpdateWindow,WED3UTC16,16:00,Third
+3rd Wednesday UTC16 - Linux Update,IfRequired,Linux,Wednesday,UpdateWindow,WED3UTC16,16:00,Third
+1st Thursday UTC0 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU1UTC0,0:00,First
+1st Thursday UTC0 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU1UTC0,0:00,First
+2nd Thursday UTC0 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU2UTC0,0:00,Second
+2nd Thursday UTC0 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU2UTC0,0:00,Second
+3rd Thursday UTC0 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU3UTC0,0:00,Third
+3rd Thursday UTC0 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU3UTC0,0:00,Third
+1st Thursday UTC8 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU1UTC8,8:00,First
+1st Thursday UTC8 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU1UTC8,8:00,First
+2nd Thursday UTC8 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU2UTC8,8:00,Second
+2nd Thursday UTC8 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU2UTC8,8:00,Second
+3rd Thursday UTC8 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU3UTC8,8:00,Third
+3rd Thursday UTC8 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU3UTC8,8:00,Third
+1st Thursday UTC16 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU1UTC16,16:00,First
+1st Thursday UTC16 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU1UTC16,16:00,First
+2nd Thursday UTC16 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU2UTC16,16:00,Second
+2nd Thursday UTC16 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU2UTC16,16:00,Second
+3rd Thursday UTC16 - Windows Update,IfRequired,Windows,Thursday,UpdateWindow,THU3UTC16,16:00,Third
+3rd Thursday UTC16 - Linux Update,IfRequired,Linux,Thursday,UpdateWindow,THU3UTC16,16:00,Third
+1st Friday UTC0 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI1UTC0,0:00,First
+1st Friday UTC0 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI1UTC0,0:00,First
+2nd Friday UTC0 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI2UTC0,0:00,Second
+2nd Friday UTC0 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI2UTC0,0:00,Second
+3rd Friday UTC0 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI3UTC0,0:00,Third
+3rd Friday UTC0 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI3UTC0,0:00,Third
+1st Friday UTC8 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI1UTC8,8:00,First
+1st Friday UTC8 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI1UTC8,8:00,First
+2nd Friday UTC8 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI2UTC8,8:00,Second
+2nd Friday UTC8 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI2UTC8,8:00,Second
+3rd Friday UTC8 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI3UTC8,8:00,Third
+3rd Friday UTC8 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI3UTC8,8:00,Third
+1st Friday UTC16 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI1UTC16,16:00,First
+1st Friday UTC16 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI1UTC16,16:00,First
+2nd Friday UTC16 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI2UTC16,16:00,Second
+2nd Friday UTC16 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI2UTC16,16:00,Second
+3rd Friday UTC16 - Windows Update,IfRequired,Windows,Friday,UpdateWindow,FRI3UTC16,16:00,Third
+3rd Friday UTC16 - Linux Update,IfRequired,Linux,Friday,UpdateWindow,FRI3UTC16,16:00,Third
+1st Saturday UTC0 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT1UTC0,0:00,First
+1st Saturday UTC0 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT1UTC0,0:00,First
+2nd Saturday UTC0 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT2UTC0,0:00,Second
+2nd Saturday UTC0 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT2UTC0,0:00,Second
+3rd Saturday UTC0 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT3UTC0,0:00,Third
+3rd Saturday UTC0 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT3UTC0,0:00,Third
+1st Saturday UTC8 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT1UTC8,8:00,First
+1st Saturday UTC8 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT1UTC8,8:00,First
+2nd Saturday UTC8 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT2UTC8,8:00,Second
+2nd Saturday UTC8 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT2UTC8,8:00,Second
+3rd Saturday UTC8 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT3UTC8,8:00,Third
+3rd Saturday UTC8 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT3UTC8,8:00,Third
+1st Saturday UTC16 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT1UTC16,16:00,First
+1st Saturday UTC16 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT1UTC16,16:00,First
+2nd Saturday UTC16 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT2UTC16,16:00,Second
+2nd Saturday UTC16 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT2UTC16,16:00,Second
+3rd Saturday UTC16 - Windows Update,IfRequired,Windows,Saturday,UpdateWindow,SAT3UTC16,16:00,Third
+3rd Saturday UTC16 - Linux Update,IfRequired,Linux,Saturday,UpdateWindow,SAT3UTC16,16:00,Third
+1st Sunday UTC0 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN1UTC0,0:00,First
+1st Sunday UTC0 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN1UTC0,0:00,First
+2nd Sunday UTC0 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN2UTC0,0:00,Second
+2nd Sunday UTC0 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN2UTC0,0:00,Second
+3rd Sunday UTC0 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN3UTC0,0:00,Third
+3rd Sunday UTC0 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN3UTC0,0:00,Third
+1st Sunday UTC8 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN1UTC8,8:00,First
+1st Sunday UTC8 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN1UTC8,8:00,First
+2nd Sunday UTC8 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN2UTC8,8:00,Second
+2nd Sunday UTC8 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN2UTC8,8:00,Second
+3rd Sunday UTC8 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN3UTC8,8:00,Third
+3rd Sunday UTC8 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN3UTC8,8:00,Third
+1st Sunday UTC16 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN1UTC16,16:00,First
+1st Sunday UTC16 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN1UTC16,16:00,First
+2nd Sunday UTC16 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN2UTC16,16:00,Second
+2nd Sunday UTC16 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN2UTC16,16:00,Second
+3rd Sunday UTC16 - Windows Update,IfRequired,Windows,Sunday,UpdateWindow,SUN3UTC16,16:00,Third
+3rd Sunday UTC16 - Linux Update,IfRequired,Linux,Sunday,UpdateWindow,SUN3UTC16,16:00,Third
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
