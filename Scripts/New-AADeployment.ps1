@@ -44,27 +44,27 @@ param (
 # Script settings
 Set-StrictMode -Version Latest
 
-# function ThrowTerminatingError
-# {
-#      Param
-#     (
-#         [Parameter(Mandatory=$true)]
-#         [ValidateNotNullOrEmpty()]
-#         [String]
-#         $ErrorId,
+function ThrowTerminatingError
+{
+     Param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $ErrorId,
 
-#         [Parameter(Mandatory=$true)]
-#         [ValidateNotNullOrEmpty()]
-#         $ErrorCategory,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ErrorCategory,
 
-#         [Parameter(Mandatory=$true)]
-#         [ValidateNotNullOrEmpty()]
-#         $Exception
-#     )
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        $Exception
+    )
 
-#     $errorRecord = [System.Management.Automation.ErrorRecord]::New($Exception, $ErrorId, $ErrorCategory, $null)
-#     throw $errorRecord
-# }
+    $errorRecord = [System.Management.Automation.ErrorRecord]::New($Exception, $ErrorId, $ErrorCategory, $null)
+    throw $errorRecord
+}
 
 #
 # Automation account requires 6 chars at minimum
@@ -81,341 +81,52 @@ if ( $AutomationAccountName.Length -lt 6 )
 # Check all dependency files exist along with this script
 #
 $curInvocation = get-variable myinvocation
+$mydir = split-path $curInvocation.Value.MyCommand.path
 
-$changeTrackingTemplateFile = @"
-[
+# $enableVMInsightsPerfCounterScriptFile = "$mydir\Enable-VMInsightsPerfCounters.ps1"
+# if (-not (Test-Path -Path $enableVMInsightsPerfCounterScriptFile))
+# {
+#     $message = "$enableVMInsightsPerfCounterScriptFile does not exist. Please ensure this file exists in the same directory as the this script."
+#     ThrowTerminatingError -ErrorId "ScriptNotFound" `
+#         -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+#         -Exception $message `
+# }
+
+$changeTrackingTemplateFile = "$mydir\Templates\ChangeTracking-Filelist.json"
+if (-not (Test-Path -Path $changeTrackingTemplateFile ) )
 {
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "workspaceLocation": {
-            "type": "String"
-        },
-        "workspaceName": {
-            "type": "String"
-        }
-    },
-    "variables": {},
-    "resources": [
-        {
-            "name": "[Concat(parameters('workspaceName'), '/ChangeTrackingServices_CollectionFrequency')]",
-            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
-            "kind": "ChangeTrackingServices",
-            "comments": "The Collection Time Interval is in seconds",
-            "apiVersion": "2015-11-01-preview",
-            "location": "[parameters('workspaceLocation')]",
-            "properties": {
-                "ListType":"Blacklist",
-                "CollectionTimeInterval":12
-            }
-        },
-        {
-            "name": "[Concat(parameters('workspaceName'), '/ChangeTrackingDataTypeConfiguration_FileRecursive')]",
-            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
-            "kind": "ChangeTrackingDataTypeConfiguration",
-            "comments": "Adding one file requires two PUT calls. Also each file needs to be added individually",
-            "apiVersion": "2015-11-01-preview",
-            "location": "[parameters('workspaceLocation')]",
-            "properties": {
-                "DataTypeId": "FileRecursive",
-                "Enabled": "false"
-            }
-        },
-        {
-            "name": "[Concat(parameters('workspaceName'), '/ChangeTrackingWindows_HostsFile')]",
-            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
-            "kind": "ChangeTrackingCustomPath",
-            "comments": "Adding hosts file",
-            "apiVersion": "2015-11-01-preview",
-            "location": "[parameters('workspaceLocation')]",
-            "properties": {
-                "checksum": "MD5",
-                "enabled": true,
-                "groupTag": "Security",
-                "path": "%winDir%\\System32\\Drivers\\etc\\hosts",
-                "pathType": "File",
-                "recurse": false
-            }
-        },
-        {
-            "name": "[Concat(parameters('workspaceName'), '/ChangeTrackingLinux_networkfolder')]",
-            "type": "Microsoft.OperationalInsights/workspaces/dataSources",
-            "kind": "ChangeTrackingLinuxPath",
-            "comments": "Adding linux network file",
-            "apiVersion": "2015-11-01-preview",
-            "location": "[parameters('workspaceLocation')]",
-            "properties": {
-                "checksum": "MD5",
-                "enabled": true,
-                "groupTag": "custom",
-                "destinationPath": "/etc/networks/*.*",
-                "pathType": "File",
-                "recurse": true,
-                "useSudo": "true",
-                "type": "File",
-                "MaxContentsReturnable": "5000000",
-                "MaxOutputSize": "5000000",
-                "links": "Follow"           
-            }
-        }
-    ]
-}
-]
-"@
-
-$scopeConfigTemplateFile = @"
-[
-
-{
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "workspaceName": {
-        "type": "string",
-        "defaultValue": "WorkspaceOne",
-        "metadata": {
-          "description": "Assign a name for the Log Analytic Workspace Name"
-          }
-      },
-      "workspaceLocation": {
-        "type": "string",
-        "metadata": {
-          "description": "Specify the region for your Workspace"
-        }
-      }
-    },
-      "variables": {
-        "ChangeTrackingInclude": ["ChangeTracking_MicrosoftDefaultComputerGroup"] ,
-        "ScopeConfigName": "MicrosoftDefaultScopeConfig-ChangeTracking",
-        "ScopeConfigKind": "SearchComputerGroup"
-      },
-
-      "resources": [
-       {
-            "apiVersion": "2017-04-26-preview",
-            "type": "Microsoft.OperationalInsights/workspaces/savedSearches",
-            "name": "[concat(parameters('workspaceName'), '/', 'changetracking|microsoftdefaultcomputergroup')]",
-            "location": "[parameters('workspaceLocation')]",
-            "properties": {
-                "displayname": "MicrosoftDefaultComputerGroup",
-                "category": "ChangeTracking",
-                "query": "Heartbeat | where Computer in~ (\"\") or ComputerEnvironment =~ \"Azure\" or VMUUID in~ (\"\") | distinct Computer",
-                "functionAlias": "ChangeTracking_MicrosoftDefaultComputerGroup",
-                "etag": "",
-                "tags": [
-                    {
-                        "Name": "Group",
-                        "Value": "Computer"
-                    }
-                ]
-            }
-        },
-        {
-            "apiVersion": "2015-11-01-preview",
-            "type": "Microsoft.OperationalInsights/workspaces/configurationScopes",
-            "name": "[concat(parameters('workspaceName'), '/', variables('ScopeConfigName'), '/')]",
-            "kind": "[variables('ScopeConfigKind')]",            
-            "location": "[parameters('workspaceLocation')]",
-            "properties": {
-                "Include": "[variables('ChangeTrackingInclude')]"
-              }
-        }
-      ], 
-  
-    "outputs": {
-      }
-  }
-
-]
-"@
-
-
-$workspaceAutomationTemplateFile = @"
-[
-{
-  "parameters": {
-    "workspaceName": {
-      "type": "string",
-      "defaultValue": "WorkspaceOne",
-      "metadata": {
-        "description": "Assign a name for the Log Analytic Workspace Name"
-        }
-    },
-    "workspaceLocation": {
-      "type": "string",
-      "defaultValue": "eastus",
-      "metadata": {
-        "description": "Specify the region for your Workspace"
-      }
-    },
-    "automationLocation": {
-      "type": "string",
-      "defaultValue": "eastus2",
-      "metadata": {
-        "description": "Specify the region for your Automation Account"
-      }
-    },
-    "automationName": {
-        "type": "string",
-        "defaultValue": "AutomationAccountOne",
-        "metadata": {
-            "description": "Assign a name for the Automation Account Name"
-        }
-    }
-  },
-    "variables": {
-    },
-    "resources": [
-      {
-        "apiversion": "2015-10-31",
-        "location": "[parameters('automationLocation')]",
-        "name": "[parameters('automationName')]",
-        "type": "Microsoft.Automation/automationAccounts",
-        "comments": "Automation account",
-        "properties": {
-          "sku": {
-            "name": "OMS"
-          }
-        }
-      },
-
-      {
-        "apiVersion": "2017-03-15-preview",
-        "location": "[parameters('workspaceLocation')]",
-        "name": "[parameters('workspaceName')]",
-        "type": "Microsoft.OperationalInsights/workspaces",
-        "comments": "Log Analytics workspace",
-        "properties": {
-          "sku": {
-            "name": "pernode"
-          },
-          "features": {
-            "legacy": 0,
-            "searchVersion": 1
-          }
-        },
-        "resources": [
-          {
-            "name": "AzureActivityLog",
-            "type": "datasources",
-            "apiVersion": "2015-11-01-preview",
-            "dependsOn": [
-                "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
-            ],
-            "kind": "AzureActivityLog",
-            "properties": {
-                "linkedResourceId": "[concat(subscription().id, '/providers/Microsoft.Insights/eventTypes/management')]"
-            }
-          },
-
-          {
-              "name": "Automation",
-              "type": "linkedServices",
-              "apiVersion": "2015-11-01-preview",
-              "dependsOn": [
-                  "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
-                  "[concat('Microsoft.Automation/automationAccounts/', parameters('automationName'))]"
-              ],
-              "properties": {
-                  "resourceId": "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationName'))]"
-              }
-          }
-        ]
-      } 
-    ], 
-
-  "outputs": {
-    }
-  
+    $message = "$changeTrackingTemplateFile does not exist. Please ensure this file exists in the same directory as the this script."
+    ThrowTerminatingError -ErrorId "TemplateNotFound" `
+        -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+        -Exception $message `
 }
 
-
-]
-"@
-
-$workspaceSolutionsTemplateFile = @"
-[
-
+$scopeConfigTemplateFile = "$mydir\Templates\ScopeConfig.json"
+if (-not (Test-Path -Path $scopeConfigTemplateFile ) )
 {
-  "parameters": {
-    "workspaceName": {
-      "type": "string",
-      "metadata": {
-        "description": "Specify  the Log Analytic Workspace Name"
-        }
-    },
-    "workspaceLocation": {
-      "type": "string",
-      "metadata": {
-        "description": "Specify the region for your Workspace"
-      }
-    }
-  },
-  "variables": {
-    "solutions": {
-      "solution": [
-        {
-            "name": "[concat('SecurityCenterFree', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "SecurityCenterFree"
-        },
-        {
-            "name": "[concat('AgentHealthAssessment', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "AgentHealthAssessment"
-        },
-        {
-            "name": "[concat('ChangeTracking', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "ChangeTracking"
-        },
-        {
-            "name": "[concat('Updates', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "Updates"
-        },
-        {
-            "name": "[concat('AzureActivity', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "AzureActivity"
-        },
-        {
-            "name": "[concat('AzureAutomation', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "AzureAutomation"
-        },
-        {
-            "name": "[concat('InfrastructureInsights', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "InfrastructureInsights"
-        },
-        {
-            "name": "[concat('ServiceMap', '(', parameters('workspaceName'), ')')]",
-            "marketplaceName": "ServiceMap"
-        }
-      ]
-    }
-  },
-  "resources": [
-    {
-      "apiVersion": "2015-11-01-preview",
-      "type": "Microsoft.OperationsManagement/solutions",
-      "name": "[concat(variables('solutions').solution[copyIndex()].Name)]",
-      "location": "[parameters('workspaceLocation')]",
-      "copy": {
-          "name": "solutionCopy",
-          "count": "[length(variables('solutions').solution)]"
-      },
-      "properties": {
-          "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
-      },
-      "plan": {
-          "name": "[variables('solutions').solution[copyIndex()].name]",
-          "product": "[concat('OMSGallery/', variables('solutions').solution[copyIndex()].marketplaceName)]",
-          "promotionCode": "",
-          "publisher": "Microsoft"
-      }
-    }
-  ], 
-
-  "outputs": {
-  }
+    $message = "$scopeConfigTemplateFile does not exist. Please ensure this file exists in the same directory as the this script."
+    ThrowTerminatingError -ErrorId "TemplateNotFound" `
+        -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+        -Exception $message `
 }
 
-]
-"@
+$workspaceAutomationTemplateFile = "$mydir\Templates\Workspace-AutomationAccount.json"
+if (-not (Test-Path -Path $workspaceAutomationTemplateFile ) )
+{
+    $message = "$workspaceAutomationTemplateFile does not exist. Please ensure this file exists in the same directory as the this script."
+    ThrowTerminatingError -ErrorId "TemplateNotFound" `
+        -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+        -Exception $message `
+}
 
+$workspaceSolutionsTemplateFile = "$mydir\Templates\WorkspaceSolutions.json"
+if (-not (Test-Path -Path $workspaceSolutionsTemplateFile ) )
+{
+    $message = "$workspaceSolutionsTemplateFile does not exist. Please ensure this file exists in the same directory as the this script."
+    ThrowTerminatingError -ErrorId "TemplateNotFound" `
+        -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+        -Exception $message `
+}
 
 #
 # Choose the right subscription
@@ -574,6 +285,19 @@ try
         }
     }
 
+    #
+    # Check if the workspace already exists
+    #
+    $workspace = Get-AzResource -Name $WorkspaceName -ResourceType "Microsoft.OperationalInsights/workspaces" -ErrorAction SilentlyContinue
+    if (-not $workspace)
+    {
+        $message = "Workspace: $($WorkspaceName) does not exists. Please check."
+        ThrowTerminatingError -ErrorId "WorkspaceNotFound" `
+            -ErrorCategory ([System.Management.Automation.ErrorCategory]::InvalidOperation) `
+            -Exception $message
+    }
+
+    #
     # Phase 2 deployment
     #
     Write-Output "Phase 2 Deployment start: Configure Change tracking"		
