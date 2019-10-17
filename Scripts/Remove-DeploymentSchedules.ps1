@@ -1,10 +1,44 @@
+###################################
+#  This script will fix your goofs.
+#  Current Version:  .01000001 01111010 01110101 01110010 01100101
+#  Date Written:  8-29-2019
+#  Last Updated:  9-15-2019
+#  Created By:    Kristopher J. Turner (The Country Cloud Boy)
+#  Uses the Az Module and not the AzureRM module
+#####################################
+
 #  In case you goof and need to remove all the deployment schedules.
 
 # Variables - Required
-$AutomationAccount=""
+$AutomationAccountName=""
 $ResourceGroupName=""
 $TenantID=""
 $SubscriptionID=""
+
+# Script settings
+Set-StrictMode -Version Latest
+
+function ThrowTerminatingError
+{
+     Param
+    (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $ErrorId,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ErrorCategory,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        $Exception
+    )
+
+    $errorRecord = [System.Management.Automation.ErrorRecord]::New($Exception, $ErrorId, $ErrorCategory, $null)
+    throw $errorRecord
+}
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
@@ -17,6 +51,8 @@ $ScheduleNames=$ScheduleConfig.ScheduleName
 
 foreach($ScheduleName in $ScheduleNames){
 
-    Remove-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccount -Name $ScheduleName
+    Remove-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -Name $ScheduleName
 
 }
+
+Write-Host "All the goofs have been deleted.  Have a nice day!"

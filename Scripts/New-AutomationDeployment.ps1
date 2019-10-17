@@ -1,45 +1,21 @@
-<#
-    .SYNOPSIS
-        This script rolls orchestrate the deployment of the solutions and the agents.
-    .Parameter SubscriptionName
-    .Parameter WorkspaceName
-    .Parameter AutomationAccountName
-    .Parameter WorkspaceLocation
-    .Parameter AutomationAccountLocation
+###################################
+#  This script is will deploy automation components.
+#  Current Version:  .01000001 01111010 01110101 01110010 01100101
+#  Date Written:  8-29-2019
+#  Last Updated:  9-15-2019
+#  Created By:    Kristopher J. Turner (The Country Cloud Boy)
+#  Uses the Az Module and not the AzureRM module
+#####################################
 
-    .Example
-    .\New-AMSDeployment.ps1 -SubscriptionName 'Subscription Name' -WorkspaceName 'WorkspaceName' -WorkspaceLocation 'eastus' -AutomationAccountName -AutomationAccountLocation
-
-    .Notes
-    PolicySet '[Preview]: Enable Azure Monitor for VMs' is assigned with name VMInsightPolicy. 
-#>
-
-param (
-    [Parameter(Mandatory=$true, HelpMessage="Subscription Name" ) ]
-    [string]$SubscriptionName,
-
-    [Parameter(Mandatory=$true, HelpMessage="Resource Group Name" )]
-    [string]$ResourceGroupName,
-
-    [Parameter(Mandatory=$false, HelpMessage="Resource Group location. Defaults to EastUS" )]
-    [string]$ResourceGroupLocation = "eastus",
-
-    [Parameter(Mandatory=$true, HelpMessage="Workspace Name" )]
-    [string]$WorkspaceName,
-
-    [Parameter(Mandatory=$false, HelpMessage="Workspace location. Defaults to EastUS" )]
-    [string]$WorkspaceLocation = "eastus",
-
-    [Parameter(Mandatory=$true, HelpMessage="Automation Account Name" )]
-    [string]$AutomationAccountName,
-
-    [Parameter(Mandatory=$false, HelpMessage="Automation Account location. Defaults to EastUS2" )]
-    [string]$AutomationAccountLocation = "eastus2",
-
-    [Parameter(Mandatory=$false, HelpMessage="Auto Enroll." )]
-    [string]$AutoEnroll = $false
-
-)
+$ResourceGroupName = ""
+$ResourceGroupLocation = ""
+$WorkspaceName = ""
+$WorkspaceLocation = ""
+$AutomationAccountName = ""
+$AutomationAccountLocation = ""
+$TenantID=""
+$SubscriptionID=""
+$AutoEnroll = $true
 
 # Script settings
 Set-StrictMode -Version Latest
@@ -65,6 +41,8 @@ function ThrowTerminatingError
     $errorRecord = [System.Management.Automation.ErrorRecord]::New($Exception, $ErrorId, $ErrorCategory, $null)
     throw $errorRecord
 }
+
+Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
 #
 # Automation account requires 6 chars at minimum
@@ -133,7 +111,7 @@ if (-not (Test-Path -Path $workspaceSolutionsTemplateFile ) )
 #
 try
 {
-    $subscription = Get-AzSubscription -SubscriptionName $SubscriptionName  -ErrorAction Stop
+    $Subscription = Get-AzSubscription -SubscriptionID $SubscriptionID  -ErrorAction Stop
 }
 catch 
 {

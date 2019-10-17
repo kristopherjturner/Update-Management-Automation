@@ -1,37 +1,20 @@
-# <#
-#     .SYNOPSIS
-#         This script rolls orchestrate the deployment of the solutions and the agents.
-#     .Parameter SubscriptionID
-#     .Parameter WorkspaceName
-#     .Parameter TenantID
-    
-#     .Example
-#     .\Enable-VMUpdateMgmt.ps1 -SubscriptionID 'Subscription ID' -WorkspaceName 'WorkspaceName' -TenantID 'Tenant ID'
+###################################
+#  This script is enable the Udpate Management Agent on all VMs.
+#  Current Version:  .01000001 01111010 01110101 01110010 01100101
+#  Date Written:   8-29-2019
+#  Created By:    Kristopher J. Turner (The Country Cloud Boy)
+#  Uses the Az Module and not the AzureRM module
+#####################################
 
-#     .Notes
-     
-# #>
+$SubscriptionId = ""
+$TenantID = ""
+$WorkspaceName = ""
 
-# param (
-#     [Parameter(Mandatory=$true, HelpMessage="Subscription ID" ) ]
-#     [string]$SubscriptionID,
+# Script settings
+Set-StrictMode -Version Latest
 
-#     [Parameter(Mandatory=$true, HelpMessage="Tenant ID" )]
-#     [string]$TenantID,
+Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
-#     [Parameter(Mandatory=$true, HelpMessage="Workspace Name" )]
-#     [string]$WorkspaceName
-
-# )
-
-# # Script settings
-# Set-StrictMode -Version Latest
-
-$WorkspaceName = "ccb-eastus-mgmt-ws"
-$TenantID="bed2fa4a-37d3-4ce9-b9fd-89bdc448e84c"
-$SubscriptionID="b97908c7-a0fc-4a2a-bd8c-0721c4d7978e"
-
-#Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
 $workspace = (Get-AzOperationalInsightsWorkspace).Where({$_.Name -eq $workspaceName})
 
@@ -43,7 +26,6 @@ if ($workspace.Name -ne $workspaceName)
 $workspaceId = $workspace.CustomerId
 $workspaceKey = (Get-AzOperationalInsightsWorkspaceSharedKeys -ResourceGroupName $workspace.ResourceGroupName -Name $workspace.Name).PrimarySharedKey
 
-$azurevms = Get-AzVM | Select-Object -ExpandProperty Name
 $WindowsVMs = Get-AzVM | where-object { $_.StorageProfile.OSDisk.OSType -eq "Windows" } | Sort-Object Name | ForEach-Object {$_.Name} | Out-String -Stream | Select-Object
 $LinuxVMs = Get-AzVM | where-object { $_.StorageProfile.OSDisk.OSType -eq "Linux" } | Sort-Object Name | ForEach-Object {$_.Name} | Out-String -Stream | Select-Object
 
@@ -66,3 +48,4 @@ Set-AzVMExtension -ResourceGroupName $VMresourcegroup -VMName $LinuxVM -Name 'Om
 
 }
 
+Write-Host "All Azure VMs have been enabled for Update Management.  Please don't forget to tip your serves.  Have a nice day!"

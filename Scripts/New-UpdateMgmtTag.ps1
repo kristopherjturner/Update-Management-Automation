@@ -6,12 +6,12 @@
 #  Uses the Az Module and not the AzureRM module
 #####################################
 
-#  Variables - Required
 #  Please fill in the following 4 variables.
 $TenantID=""
 $SubscriptionID=""
-$aztag = ""
-$tagvalue = ""
+$vmtagname = "UpdateWindow"
+$tagvalue = "Default"
+
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
@@ -26,21 +26,21 @@ $azurevms
 
 foreach ($azurevm in $azurevms) {
     
-    Write-Host Checking for tag "$aztag" on "$azurevm"
-    $ResourceGroupName = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
+    Write-Host Checking for tag "$vmtagname" on "$azurevm"
+    $tagRGname = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
     
-    $tags = (Get-AzResource -ResourceGroupName $ResourceGroupName `
+    $tags = (Get-AzResource -ResourceGroupName $tagRGname `
                         -Name $azurevm).Tags
 
 If ($tags.UpdateWindow){
-Write-Host "$azurevm already has the tag $aztag."
+Write-Host "$azurevm already has the tag $vmtagname."
 }
 else
 {
-Write-Host "Creating Tag $aztag and Value $tagvalue for $azurevm"
-$tags.Add($aztag,$tagvalue)
+Write-Host "Creating Tag $vmtagname and Value $tagvalue for $azurevm"
+$tags.Add($vmtagname,$tagvalue)
   
-    Set-AzResource -ResourceGroupName $ResourceGroupName `
+    Set-AzResource -ResourceGroupName $tagRGname `
                -ResourceName $azurevm `
                -ResourceType Microsoft.Compute/virtualMachines `
                -Tag $tags `

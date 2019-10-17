@@ -8,10 +8,11 @@
 #####################################
 
 # Variables - Required
-$AutomationAccount=""
-$ResourceGroupName=""
-$TenantID=""
-$SubscriptionID=""
+$AutomationAccountName="ccb-mgmt-aa"
+$ResourceGroupName="demo05"
+$TenantID="bed2fa4a-37d3-4ce9-b9fd-89bdc448e84c"
+$SubscriptionID="b97908c7-a0fc-4a2a-bd8c-0721c4d7978e"
+
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
@@ -32,7 +33,7 @@ foreach($WindowsSchedule in $WindowsSchedules){
 
 $tag = @{$WindowsSchedule.TagName=$WindowsSchedule.TagValue}
 $azq = New-AzAutomationUpdateManagementAzureQuery -ResourceGroupName $ResourceGroupName `
-                                       -AutomationAccountName $AutomationAccount `
+                                       -AutomationAccountName $AutomationAccountName `
                                        -Scope $QueryScope `
                                        -Tag $tag
 
@@ -46,7 +47,7 @@ $startTime = [DateTimeOffset]"$datetime"
 $duration = New-TimeSpan -Hours 2
 
 $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
-                                                  -AutomationAccountName $AutomationAccount `
+                                                  -AutomationAccountName $AutomationAccountName `
                                                   -Name $WindowsSchedule.ScheduleName `
                                                   -StartTime $StartTime `
                                                   -DayofWeek $WindowsSchedule.DayofWeek `
@@ -55,7 +56,7 @@ $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
                                                   -ForUpdateConfiguration
 
 New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
-                                                 -AutomationAccountName $AutomationAccount `
+                                                 -AutomationAccountName $AutomationAccountName `
                                                  -Schedule $schedule `
                                                  -Windows `
                                                  -Azurequery $AzureQueries `
@@ -68,7 +69,7 @@ foreach ($LinuxSchedule in $LinuxSchedules){
 
 $tag = @{$LinuxSchedule.TagName=$LinuxSchedule.TagValue}
 $azq = New-AzAutomationUpdateManagementAzureQuery -ResourceGroupName $ResourceGroupName `
-                                       -AutomationAccountName $AutomationAccount `
+                                       -AutomationAccountName $AutomationAccountName `
                                        -Scope $QueryScope `
                                        -Tag $tag
 
@@ -81,7 +82,7 @@ $datetime= $date + "t" + $time
 $startTime = [DateTimeOffset]"$datetime"
 $duration = New-TimeSpan -Hours 2
 $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
-                                                  -AutomationAccountName $AutomationAccount `
+                                                  -AutomationAccountName $AutomationAccountName `
                                                   -Name $LinuxSchedule.ScheduleName `
                                                   -StartTime $StartTime `
                                                   -DayofWeek $LinuxSchedule.DayofWeek `
@@ -90,7 +91,7 @@ $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
                                                   -ForUpdateConfiguration
 
 New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
-                                                 -AutomationAccountName $AutomationAccount `
+                                                 -AutomationAccountName $AutomationAccountName `
                                                  -Schedule $schedule `
                                                  -Linux `
                                                  -Azurequery $AzureQueries `
