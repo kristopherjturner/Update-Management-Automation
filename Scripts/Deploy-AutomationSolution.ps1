@@ -53,19 +53,6 @@ $VMTagName = "UpdateWindow"
 $TagValue = "Default" 
 $AutoEnroll = $true
 
-$ResourceGroupName = "ccbmgmtwsdemo"
-$ResourceGroupLocation = "EastUS"
-$WorkspaceName = "ccbmgmtwsdemo"
-$WorkspaceLocation = "eastus"
-$AutomationAccountName = "ccb-mgmt-aa"
-$AutomationAccountLocation = "eastus2"
-$TenantID="bed2fa4a-37d3-4ce9-b9fd-89bdc448e84c"
-$SubscriptionID="b97908c7-a0fc-4a2a-bd8c-0721c4d7978e"
-$VMTagName = "UpdateWindow"
-$TagValue = "Default" 
-$AutoEnroll = $true
-
-
 # Script settings
 Set-StrictMode -Version Latest
 
@@ -404,27 +391,47 @@ $azurevms
 foreach ($azurevm in $azurevms) {
     
     Write-Host Checking for tag "$vmtagname" on "$azurevm"
-    $tagrgname = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
+    $tagrg = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
     
-    $tags = (Get-AzResource -ResourceGroupName $tagRGname `
+    $tags = (Get-AzResource -ResourceGroupName $tagrg `
             -Name $azurevm).Tags
 
-    If ($tags.UpdateWindow) {
-        Write-Host "$azurevm already has the tag $vmtagname."
-    }
-    else {
-        Write-Host "Creating Tag $vmtagname and Value $tagvalue for $azurevm"
-        $tags.Add($vmtagname, $tagvalue)
+    Write-Host "Creating Tag $vmtagname and Value $tagvalue for $azurevm"
+    $tags.Add($vmtagname, $tagvalue)
   
-        Set-AzResource -ResourceGroupName $tagRGname `
-            -ResourceName $azurevm `
-            -ResourceType Microsoft.Compute/virtualMachines `
-            -Tag $tags `
-            -Force `
-   
-    }
-   
+    Set-AzResource -ResourceGroupName $tagrg `
+        -ResourceName $azurevm `
+        -ResourceType Microsoft.Compute/virtualMachines `
+        -Tag $tags `
+        -Force
 }
+
+
+#  Section use to work.  Commented out to discover why.
+# foreach ($azurevm in $azurevms) {
+    
+#     Write-Host Checking for tag "$vmtagname" on "$azurevm"
+#     $tagrg = get-azvm -name $azurevm | Select-Object -ExpandProperty ResourceGroupName
+    
+#     $tags = (Get-AzResource -ResourceGroupName $tagrg `
+#                         -Name $azurevm).Tags
+
+# If ($tags.UpdateWindow){
+# Write-Host "$azurevm already has the tag $vmtagname."
+# }
+# else
+# {
+# Write-Host "Creating Tag $vmtagname and Value $tagvalue for $azurevm"
+# $tags.Add($vmtagname,$tagvalue)
+  
+#     Set-AzResource -ResourceGroupName $tagrg `
+#                -ResourceName $azurevm `
+#                -ResourceType Microsoft.Compute/virtualMachines `
+#                -Tag $tags `
+#                -Force
+#    }
+   
+# }
 
 Write-Host "All tagging is done (and hopfully it worked).  Please exit the ride to your left.  Have a nice day!"
 
@@ -492,78 +499,78 @@ $ScheduleConfig = Get-Content -Path .\array.csv | ConvertFrom-Csv
 $scope = "/subscriptions/$((Get-AzContext).subscription.id)"
 $QueryScope = @($scope)
 
-$WindowsSchedules = $ScheduleConfig | Where-Object {$_.OS -eq "Windows"}
-$LinuxSchedules = $ScheduleConfig | Where-Object {$_.OS -eq "Linux"}
+$WindowsSchedules = $ScheduleConfig | Where-Object { $_.OS -eq "Windows" }
+$LinuxSchedules = $ScheduleConfig | Where-Object { $_.OS -eq "Linux" }
 
-foreach($WindowsSchedule in $WindowsSchedules){
+foreach ($WindowsSchedule in $WindowsSchedules) {
 
-$tag = @{$WindowsSchedule.TagName=$WindowsSchedule.TagValue}
-$azq = New-AzAutomationUpdateManagementAzureQuery -ResourceGroupName $ResourceGroupName `
-                                       -AutomationAccountName $AutomationAccountName `
-                                       -Scope $QueryScope `
-                                       -Tag $tag
+    $tag = @{$WindowsSchedule.TagName = $WindowsSchedule.TagValue }
+    $azq = New-AzAutomationUpdateManagementAzureQuery -ResourceGroupName $ResourceGroupName `
+        -AutomationAccountName $AutomationAccountName `
+        -Scope $QueryScope `
+        -Tag $tag
 
-$AzureQueries = @($azq)
+    $AzureQueries = @($azq)
 
-$date=((get-date).AddDays(1)).ToString("yyyy-MM-dd")
-$time=$WindowsSchedule.Starttime
-$datetime= $date + "t" + $time
+    $date = ((get-date).AddDays(1)).ToString("yyyy-MM-dd")
+    $time = $WindowsSchedule.Starttime
+    $datetime = $date + "t" + $time
 
-$startTime = [DateTimeOffset]"$datetime"
-$duration = New-TimeSpan -Hours 2
+    $startTime = [DateTimeOffset]"$datetime"
+    $duration = New-TimeSpan -Hours 2
 
-$schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
-                                                  -AutomationAccountName $AutomationAccountName `
-                                                  -Name $WindowsSchedule.ScheduleName `
-                                                  -StartTime $StartTime `
-                                                  -DayofWeek $WindowsSchedule.DayofWeek `
-                                                  -DayofWeekOccurrence $WindowsSchedule.DaysofWeekOccurrence `
-                                                  -MonthInterval 1 `
-                                                  -ForUpdateConfiguration
+    $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
+        -AutomationAccountName $AutomationAccountName `
+        -Name $WindowsSchedule.ScheduleName `
+        -StartTime $StartTime `
+        -DayofWeek $WindowsSchedule.DayofWeek `
+        -DayofWeekOccurrence $WindowsSchedule.DaysofWeekOccurrence `
+        -MonthInterval 1 `
+        -ForUpdateConfiguration
 
-New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
-                                                 -AutomationAccountName $AutomationAccountName `
-                                                 -Schedule $schedule `
-                                                 -Windows `
-                                                 -Azurequery $AzureQueries `
-                                                 -IncludedUpdateClassification Critical,Security,Updates,UpdateRollup,Definition `
-                                                 -Duration $duration `
-                                                 -RebootSetting $WindowsSchedule.Reboot
+    New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
+        -AutomationAccountName $AutomationAccountName `
+        -Schedule $schedule `
+        -Windows `
+        -Azurequery $AzureQueries `
+        -IncludedUpdateClassification Critical, Security, Updates, UpdateRollup, Definition `
+        -Duration $duration `
+        -RebootSetting $WindowsSchedule.Reboot
 }
 
-foreach ($LinuxSchedule in $LinuxSchedules){
+foreach ($LinuxSchedule in $LinuxSchedules) {
 
-$tag = @{$LinuxSchedule.TagName=$LinuxSchedule.TagValue}
-$azq = New-AzAutomationUpdateManagementAzureQuery -ResourceGroupName $ResourceGroupName `
-                                       -AutomationAccountName $AutomationAccountName `
-                                       -Scope $QueryScope `
-                                       -Tag $tag
+    $tag = @{$LinuxSchedule.TagName = $LinuxSchedule.TagValue }
+    $azq = New-AzAutomationUpdateManagementAzureQuery -ResourceGroupName $ResourceGroupName `
+        -AutomationAccountName $AutomationAccountName `
+        -Scope $QueryScope `
+        -Tag $tag
 
-$AzureQueries = @($azq)
+    $AzureQueries = @($azq)
 
-$date=((get-date).AddDays(1)).ToString("yyyy-MM-dd")
-$time=$LinuxSchedule.Starttime
-$datetime= $date + "t" + $time
+    $date = ((get-date).AddDays(1)).ToString("yyyy-MM-dd")
+    $time = $LinuxSchedule.Starttime
+    $datetime = $date + "t" + $time
 
-$startTime = [DateTimeOffset]"$datetime"
-$duration = New-TimeSpan -Hours 2
-$schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
-                                                  -AutomationAccountName $AutomationAccountName `
-                                                  -Name $LinuxSchedule.ScheduleName `
-                                                  -StartTime $StartTime `
-                                                  -DayofWeek $LinuxSchedule.DayofWeek `
-                                                  -DayofWeekOccurrence $LinuxSchedule.DaysofWeekOccurrence `
-                                                  -MonthInterval 1 `
-                                                  -ForUpdateConfiguration
+    $startTime = [DateTimeOffset]"$datetime"
+    $duration = New-TimeSpan -Hours 2
+    $schedule = New-AzAutomationSchedule -ResourceGroupName $ResourceGroupName `
+        -AutomationAccountName $AutomationAccountName `
+        -Name $LinuxSchedule.ScheduleName `
+        -StartTime $StartTime `
+        -DayofWeek $LinuxSchedule.DayofWeek `
+        -DayofWeekOccurrence $LinuxSchedule.DaysofWeekOccurrence `
+        -MonthInterval 1 `
+        -ForUpdateConfiguration
 
-New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
-                                                 -AutomationAccountName $AutomationAccountName `
-                                                 -Schedule $schedule `
-                                                 -Linux `
-                                                 -Azurequery $AzureQueries `
-                                                 -IncludedPackageClassification Critical,Security `
-                                                 -Duration $duration `
-                                                 -RebootSetting $LinuxSchedule.Reboot
+    New-AzAutomationSoftwareUpdateConfiguration -ResourceGroupName $ResourceGroupName `
+        -AutomationAccountName $AutomationAccountName `
+        -Schedule $schedule `
+        -Linux `
+        -Azurequery $AzureQueries `
+        -IncludedPackageClassification Critical, Security `
+        -Duration $duration `
+        -RebootSetting $LinuxSchedule.Reboot
 }
 
 Write-Host "Now that took forever but the deployment schedules are done!"

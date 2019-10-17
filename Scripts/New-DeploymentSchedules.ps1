@@ -8,10 +8,10 @@
 #####################################
 
 # Variables - Required
-$AutomationAccountName="ccb-mgmt-aa"
-$ResourceGroupName="demo05"
-$TenantID="bed2fa4a-37d3-4ce9-b9fd-89bdc448e84c"
-$SubscriptionID="b97908c7-a0fc-4a2a-bd8c-0721c4d7978e"
+$AutomationAccountName=""
+$ResourceGroupName=""
+$TenantID=""
+$SubscriptionID=""
 
 
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID

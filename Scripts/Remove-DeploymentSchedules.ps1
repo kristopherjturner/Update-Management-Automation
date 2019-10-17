@@ -18,28 +18,6 @@ $SubscriptionID=""
 # Script settings
 Set-StrictMode -Version Latest
 
-function ThrowTerminatingError
-{
-     Param
-    (
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
-        $ErrorId,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        $ErrorCategory,
-
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        $Exception
-    )
-
-    $errorRecord = [System.Management.Automation.ErrorRecord]::New($Exception, $ErrorId, $ErrorCategory, $null)
-    throw $errorRecord
-}
-
 Connect-AzAccount -Tenant $TenantID -SubscriptionId $SubscriptionID
 
 #  Build the array
