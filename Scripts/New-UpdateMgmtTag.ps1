@@ -43,7 +43,7 @@ $tags.Add($vmtagname,$tagvalue)
     Set-AzResource -ResourceGroupName $tagRGname `
                -ResourceName $azurevm `
                -ResourceType Microsoft.Compute/virtualMachines `
-               -Tag $tags `
+               -Tag @{"$vmtagname"="$tagvalue"} `
                -Force `
    }
    
